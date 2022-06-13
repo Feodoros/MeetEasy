@@ -66,6 +66,7 @@ def transcript_to_json(transcript, voice_time_json):
     transcript_json = {'recording_id': transcript['id']}
     voice_chunks = voice_time_json['chunks']
     messages = []
+    k = 0
     #prev_speaker = ''
     for i in range(0, len(transcript['response']['chunks']), 2):
         chunk = transcript['response']['chunks'][i]
@@ -83,7 +84,8 @@ def transcript_to_json(transcript, voice_time_json):
         #     prev_chunk_json['text'] += chunk['alternatives'][0]['text']
         #     continue
 
-        chunk_json = {'id': speaker_id}
+        chunk_json = {'id': i // 2}
+        chunk_json['speaker'] = speaker_id
         chunk_json['text'] = chunk['alternatives'][0]['text']
         chunk_json['start_time'] = str(
             timedelta(seconds=start_time)).split(".")[0]
@@ -91,6 +93,7 @@ def transcript_to_json(transcript, voice_time_json):
             timedelta(seconds=start_time)).split(".")[0]
         #prev_speaker = speaker_id
         messages.append(chunk_json)
+        k += 1
 
     transcript_json['message_list'] = messages
     return transcript_json

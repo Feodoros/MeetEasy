@@ -63,5 +63,5 @@ def transcript_to_markdown(meeting_json):
     for message in transcript:
         s = format_str if message['label'] == '' else labeled_format_str
         result += s.format(message['start_time'],
-                           message['id'], message['text'], message['label'])
+                           message['speaker'], message['text'], message['label'])
     return '<h2> Transcript: </h2>' + result
