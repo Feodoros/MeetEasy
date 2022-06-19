@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 from Transcriber import transcriber
 from Backend import followup_builder
 import os
+import json
 
 CURRENT_DIR = os.path.dirname(__file__)
 DB = os.path.join(CURRENT_DIR, 'DB')
@@ -26,6 +27,8 @@ def save_file():
         f.save(file_path)
 
         meeting_json = transcriber.transcribe_meeting(file_path)
+        with open(os.path.join(DB, f'{f.filename}.json'), 'w+', encoding='utf-8') as f:
+            json.dump(meeting_json, f, ensure_ascii=False)
         os.remove(file_path)
 
         meeting_html = followup_builder.meeting_to_markdown(meeting_json)
