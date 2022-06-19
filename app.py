@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
-from ML import transcriber
+from Transcriber import transcriber
 from Backend import followup_builder
 import os
 

@@ -1,0 +1,3 @@
+[submodule "Transcriber"]
+	path = Transcriber
+	url = git@github.com:MeetEasy/Transcriber.git
