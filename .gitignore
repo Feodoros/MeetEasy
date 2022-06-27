@@ -1,3 +1,4 @@
 .vscode/launch.json
 *.pyc
 .venv/
+templates/content.html

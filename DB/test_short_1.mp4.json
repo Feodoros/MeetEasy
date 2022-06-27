@@ -1,0 +1,40 @@
+{
+    "recording_id": "e035pf783gpsmv1jib98",
+    "message_list": [
+        {
+            "id": 0,
+            "speaker": "SPEAKER_00",
+            "text": "Всем привет",
+            "start_time": "0:00:02",
+            "end_time": "0:00:02"
+        },
+        {
+            "id": 1,
+            "speaker": "SPEAKER_00",
+            "text": "Я на тестовом собрании",
+            "start_time": "0:00:03",
+            "end_time": "0:00:03"
+        },
+        {
+            "id": 2,
+            "speaker": "SPEAKER_00",
+            "text": "Задача придумать новое слово",
+            "start_time": "0:00:06",
+            "end_time": "0:00:06"
+        },
+        {
+            "id": 3,
+            "speaker": "SPEAKER_00",
+            "text": "Напоминаю завтра созвон в 8 вечера",
+            "start_time": "0:00:10",
+            "end_time": "0:00:10"
+        },
+        {
+            "id": 4,
+            "speaker": "SPEAKER_00",
+            "text": "Всем пока",
+            "start_time": "0:00:14",
+            "end_time": "0:00:14"
+        }
+    ]
+}
