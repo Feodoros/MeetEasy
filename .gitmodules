@@ -1,3 +1,6 @@
 [submodule "Transcriber"]
 	path = Transcriber
 	url = git@github.com:MeetEasy/Transcriber.git
+[submodule "Decomposer"]
+	path = Decomposer
+	url = git@github.com:MeetEasy/Decomposer.git
