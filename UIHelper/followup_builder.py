@@ -1,14 +1,15 @@
 from datetime import date
 
 markdown_format_name = "<h1><center>{}</center></h1>"
-markdown_format_date = "<h2>From: {}</h2>"
+markdown_format_date = "<h3>Date: {}</h3>"
 markdown_format_key_words = "<h2>Key words: {}</h2>"
 markdown_format_summary = "<h2>Summary: {}</h2>"
-markdown_format_tasks = "<p><strong>Tasks:</strong> <em>{}</em></p>"
-markdown_format_reminders = "<p><strong>Reminders:</strong> <em>{}</em></p>"
-markdown_format_been_done = "<p><strong>Been done:</strong> <em>{}</em></p>"
-markdown_format_todo = "<p><strong>TODO:</strong> <em>{}</em></p>"
-
+markdown_tasks = "<h2>Tasks: </h2>"
+markdown_reminders = "<h2>Reminders: </h2>"
+markdown_been_done = "<h2>Been done: </h2>"
+markdown_todo = "<h2>Plans: </h2>"
+html_begining = "<!DOCTYPE html><html><head><style>p.dotted {{border-style: dotted;}}</style></head><body> {}"
+html_ending = "</body></html>"
 
 # Make markdown from meeting
 def meeting_to_markdown(meeting_json):
@@ -20,26 +21,26 @@ def meeting_to_markdown(meeting_json):
 
     key_words = meeting_json.get('topic')
     summary = meeting_json.get('summary')
-    tasks = meeting_json.get('task')
-    reminders = meeting_json.get('reminder')
-    been_done = process_meeting_node(meeting_json, 'BEEN DONE')
-    todo = process_meeting_node(meeting_json, 'TODO')
+    tasks = process_tasks_reminders(meeting_json, 'task')
+    reminders = process_tasks_reminders(meeting_json, 'reminder')
+    been_done = process_colored_text(meeting_json, 'BEEN DONE')
+    todo = process_colored_text(meeting_json, 'TODO')
 
-    meeting_markdown = markdown_format_name.format(name) + \
+    body = markdown_format_name.format(name) + \
         markdown_format_date.format(date_start) + \
         (markdown_format_key_words.format(key_words) if key_words else '') + \
-        markdown_format_summary.format(summary) + \
-        (markdown_format_tasks.format(tasks) if tasks else '') + \
-        (markdown_format_reminders.format(reminders) if reminders else '') + \
-        (markdown_format_been_done.format(been_done) if been_done else '') + \
-        (markdown_format_todo.format(todo) if todo else '')
+        markdown_format_summary.format(summary) + '<hr>' + \
+        (markdown_tasks + tasks + '<hr>' if tasks else '') + \
+        (markdown_reminders + reminders + '<hr>' if reminders else '') + \
+        (markdown_been_done + been_done + '<hr>' if been_done else '') + \
+        (markdown_todo + todo + '<hr>' if todo else '')
 
     transcript_markdown = transcript_to_markdown(meeting_json)
-    return meeting_markdown + transcript_markdown
+    return html_begining.format(body + transcript_markdown) + html_ending
 
 
 # Process meeting nodes such a 'been done' or 'todo'
-def process_meeting_node(meeting_json, node_name):
+def process_colored_text(meeting_json, node_name):
     nodes = meeting_json.get('colored').get(node_name)
     if not nodes:
         return ''
@@ -50,7 +51,7 @@ def process_meeting_node(meeting_json, node_name):
         node_text = ''
         for phrase in node:
             if k % 2 == 1:
-                node_text += f'<strong>{phrase}</strong>'
+                node_text += f'<strong style="color:blue;font-size:20px;">{phrase}</strong>'
             else:
                 node_text += phrase
 
@@ -58,6 +59,23 @@ def process_meeting_node(meeting_json, node_name):
             k += 1
         text += f'<p>{node_text}</p>'
     return text
+
+
+# Process tasks and reminders
+def process_tasks_reminders(meeting_json, node_name):
+    result_text = ''
+    speakers = meeting_json.get(node_name)
+    if not speakers:
+        return ''
+
+    for key, value in speakers.items():
+        if len(value) == 0:
+            continue
+        speaker_text = f'<h3>Tasks from {key}: </h3>'
+        for phrase in value:
+            speaker_text += f'<p style="font-size:19px;"> • {phrase}</p>' if phrase else ''
+        result_text += speaker_text
+    return result_text
 
 
 def transcript_to_markdown(meeting_json):
