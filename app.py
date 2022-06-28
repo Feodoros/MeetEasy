@@ -29,17 +29,17 @@ def save_file():
 
         # Transcribing meeting and voice segmentation
         meeting_json = transcriber.transcribe_meeting(file_path)
-        with open(os.path.join(DB, f'{f.filename}.json'), 'w+', encoding='utf-8') as f:
-            json.dump(meeting_json, f, ensure_ascii=False)
-        os.remove(file_path)
 
         # Decompose meeting:
         # Summary, Tasks, Reminders, plans, etc
         meeting_json = decomposition.decompose(meeting_json)
 
+        with open(os.path.join(DB, f'{f.filename}.json'), 'w+', encoding='utf-8') as f:
+            json.dump(meeting_json, f, ensure_ascii=False)
+        os.remove(file_path)
+
         # JSON meeting to html
-        meeting_html = followup_builder.meeting_to_markdown(meeting_json)
-        #content = meeting_html
+        meeting_html = followup_builder.meeting_to_markdown(meeting_json)            
         result_path = os.path.join(app.template_folder, 'content.html')
         with open(result_path, 'w+', encoding="utf-8") as content:
             content.write(meeting_html)
