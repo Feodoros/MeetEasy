@@ -46,9 +46,9 @@ def process_colored_text(meeting_json, node_name):
         return ''
 
     text = ''
-    k = 0
     for node in nodes:
         node_text = ''
+        k = 0
         for phrase in node:
             if k % 2 == 1:
                 node_text += f'<strong style="color:blue;font-size:20px;">{phrase}</strong>'
