@@ -12,6 +12,8 @@ html_begining = "<!DOCTYPE html><html><head><style>p.dotted {{border-style: dott
 html_ending = "</body></html>"
 
 # Make markdown from meeting
+
+
 def meeting_to_markdown(meeting_json):
 
     date_start = meeting_json.get('date_start') if meeting_json.get(
@@ -21,8 +23,8 @@ def meeting_to_markdown(meeting_json):
 
     key_words = meeting_json.get('topic')
     summary = meeting_json.get('summary')
-    tasks = process_tasks_reminders(meeting_json, 'task')
-    reminders = process_tasks_reminders(meeting_json, 'reminder')
+    tasks = process_tasks(meeting_json)
+    reminders = process_reminders(meeting_json)
     been_done = process_colored_text(meeting_json, 'BEEN DONE')
     todo = process_colored_text(meeting_json, 'TODO')
 
@@ -61,10 +63,21 @@ def process_colored_text(meeting_json, node_name):
     return text
 
 
-# Process tasks and reminders
-def process_tasks_reminders(meeting_json, node_name):
+def process_reminders(meeting_json):
+    res_text = ''
+    reminders = meeting_json.get('reminder')
+    if not reminders:
+        return ''
+
+    for reminder in reminders:
+        res_text += f'<p style="font-size:19px;"> • {reminder}</p>' if reminder else ''
+    return res_text
+
+
+# Process tasks
+def process_tasks(meeting_json):
     result_text = ''
-    speakers = meeting_json.get(node_name)
+    speakers = meeting_json.get('task')
     if not speakers:
         return ''
 
