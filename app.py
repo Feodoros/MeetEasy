@@ -23,20 +23,22 @@ def upload_file():
 def save_file():
     if request.method == 'POST':
         f = request.files['files']
-        file_name = secure_filename(f.filename)
+        file_name = f.filename
+        #secure_file_name = secure_filename(file_name)
         file_path = os.path.join(CACHE, file_name)
         f.save(file_path)
 
         # Transcribing meeting and voice segmentation
-        meeting_json = transcriber.transcribe_meeting(file_path)
+        meeting_json = transcriber.transcribe_meeting(file_path)       
+        os.remove(file_path)
 
         # Decompose meeting:
         # Summary, Tasks, Reminders, plans, etc
         meeting_json = decomposition.decompose(meeting_json)
 
-        with open(os.path.join(DB, f'{f.filename}.json'), 'w+', encoding='utf-8') as f:
+        with open(os.path.join(DB, f'{file_name}.json'), 'w+', encoding='utf-8') as f:
             json.dump(meeting_json, f, ensure_ascii=False)
-        os.remove(file_path)
+        
 
         # JSON meeting to html
         meeting_html = followup_builder.meeting_to_markdown(meeting_json)            
