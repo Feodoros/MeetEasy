@@ -53,7 +53,7 @@ def process_colored_text(meeting_json, node_name):
         k = 0
         for phrase in node:
             if k % 2 == 1:
-                node_text += f'<strong style="color:blue;font-size:20px;">{phrase}</strong>'
+                node_text += f'<strong style="color:#0084b0;font-size:20px;">{phrase}</strong>'
             else:
                 node_text += phrase
 
@@ -64,14 +64,24 @@ def process_colored_text(meeting_json, node_name):
 
 
 def process_reminders(meeting_json):
-    res_text = ''
-    reminders = meeting_json.get('reminder')
-    if not reminders:
+    nodes = meeting_json.get('reminder')
+    if not nodes:
         return ''
 
-    for reminder in reminders:
-        res_text += f'<p style="font-size:19px;"> • {reminder}</p>' if reminder else ''
-    return res_text
+    text = ''
+    for node in nodes:
+        node_text = ''
+        k = 0
+        for phrase in node:
+            if k % 2 == 1:
+                node_text += f'<strong style="color:#0084b0;font-size:20px;">{phrase}</strong>'
+            else:
+                node_text += phrase
+
+            node_text += ' '
+            k += 1
+        text += f'<p>{node_text}</p>'
+    return text    
 
 
 # Process tasks

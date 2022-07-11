@@ -6,8 +6,8 @@ import os
 DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(DIR, 'data')
 
-test_followup = os.path.join(DATA_DIR, 'meeting_recording_6_PLANTS.webm.json')
-output_path = os.path.join(DATA_DIR, 'meeting_recording_6_PLANTS.webm.html')
+test_followup = os.path.join(DATA_DIR, 'test_short_1.mp4.json')
+output_path = os.path.join(DATA_DIR, 'test_short_1.mp4.html')
 
 
 if __name__ == '__main__':
