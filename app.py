@@ -1,12 +1,10 @@
 from Transcriber import assembly_recognition
 from UIHelper import followup_builder
 from Decomposer import decomposition
-from flask import Flask, render_template, render_template_string, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, render_template_string, request, send_from_directory
 from turbo_flask import Turbo
-from werkzeug.utils import secure_filename
 import os
 import json
-import time
 
 CURRENT_DIR = os.path.dirname(__file__)
 DB = os.path.join(CURRENT_DIR, 'DB')

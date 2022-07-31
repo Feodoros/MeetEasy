@@ -8,7 +8,7 @@ markdown_tasks = "<h2>Tasks: </h2>"
 markdown_reminders = "<h2>Reminders: </h2>"
 markdown_been_done = "<h2>Been done: </h2>"
 markdown_todo = "<h2>Plans: </h2>"
-html_begining = "<!DOCTYPE html><html><head><style>p.dotted {{border-style: dotted;}}</style></head><body style=\"background-color: #edf0f4 !important;\"> {}"
+html_begining = "<!DOCTYPE html><html><head><style>p.dotted {{border-style: dotted;}}</style></head><body style=\"background-color: #edf0f4 !important; margin:30px;\"> {}"
 html_ending = "</body></html>"
 
 
