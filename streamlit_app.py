@@ -13,7 +13,6 @@ uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     file_name = uploaded_file.name
-    st.write("filename:", file_name)
 
     if st.button('Process file'):
         if bytes_data:
@@ -41,4 +40,5 @@ if uploaded_file is not None:
             # with open(result_path, 'w+', encoding="utf-8") as content:
             #     content.write(meeting_html)
         st.success('Done!')
+        st.balloons()
         st.json(meeting_json)
