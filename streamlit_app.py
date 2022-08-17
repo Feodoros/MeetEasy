@@ -1,5 +1,5 @@
 from Transcriber import assembly_recognition
-from UIHelper import followup_builder
+from UIHelper import streamlit_followup_builder
 from Decomposer import decomposition
 import streamlit as st
 import os
@@ -33,12 +33,5 @@ if uploaded_file is not None:
             with open(os.path.join(DB, f'{file_name}.json'), 'w+', encoding='utf-8') as f:
                 json.dump(meeting_json, f, ensure_ascii=False)
 
-            # JSON meeting to html
-            # meeting_html = followup_builder.meeting_to_markdown(meeting_json)
-            # result_path = os.path.join(
-            #     app.template_folder, f'{file_path}.html')
-            # with open(result_path, 'w+', encoding="utf-8") as content:
-            #     content.write(meeting_html)
-        st.success('Done!')
         st.balloons()
-        st.json(meeting_json)
+        streamlit_followup_builder.build_followup(meeting_json)
