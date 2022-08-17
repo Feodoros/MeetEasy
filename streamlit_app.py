@@ -1,5 +1,5 @@
-from Transcriber import assembly_recognition
 from UIHelper import streamlit_followup_builder
+from Transcriber import assembly_recognition
 from Decomposer import decomposition
 import streamlit as st
 import os
